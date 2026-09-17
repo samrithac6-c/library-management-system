@@ -1,3 +1,6 @@
+## Live Demo
+
+[Open Library Management System](https://library-management-system-f4xm.onrender.com/)
 # Library Management System
 
 A full-stack Library Management System developed using **Spring Boot** and a frontend application.
