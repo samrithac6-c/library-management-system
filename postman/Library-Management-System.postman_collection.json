@@ -1,0 +1,65 @@
+{
+  "info": {
+    "name": "Library Management System API",
+    "_postman_id": "library-management-system-sop",
+    "description": "CRUD, validation, filtering, and issue/return examples for the Spring Boot API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "bookId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Create book",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"Domain-Driven Design\",\n  \"author\": \"Eric Evans\",\n  \"isbn\": \"9780321125217\",\n  \"category\": \"Programming\",\n  \"publisher\": \"Addison-Wesley\",\n  \"publicationYear\": 2003,\n  \"quantity\": 3\n}" },
+        "url": "{{baseUrl}}/api/books"
+      }
+    },
+    {
+      "name": "List books with search and category filter",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/books?search=clean&category=Programming" }
+    },
+    {
+      "name": "Get book by ID",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/books/{{bookId}}" }
+    },
+    {
+      "name": "Update book",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"Clean Code - Updated\",\n  \"author\": \"Robert C. Martin\",\n  \"isbn\": \"9780132350884\",\n  \"category\": \"Programming\",\n  \"publisher\": \"Prentice Hall\",\n  \"publicationYear\": 2008,\n  \"quantity\": 8\n}" },
+        "url": "{{baseUrl}}/api/books/{{bookId}}"
+      }
+    },
+    {
+      "name": "Issue one copy",
+      "request": { "method": "POST", "url": "{{baseUrl}}/api/books/{{bookId}}/issue" }
+    },
+    {
+      "name": "Return one copy",
+      "request": { "method": "POST", "url": "{{baseUrl}}/api/books/{{bookId}}/return" }
+    },
+    {
+      "name": "Duplicate ISBN validation (expected 409)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"Duplicate\",\n  \"author\": \"Tester\",\n  \"isbn\": \"9780132350884\",\n  \"category\": \"Testing\",\n  \"publisher\": \"SOP Press\",\n  \"publicationYear\": 2024,\n  \"quantity\": 1\n}" },
+        "url": "{{baseUrl}}/api/books"
+      }
+    },
+    {
+      "name": "Missing ID validation (expected 404)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/books/999999999" }
+    },
+    {
+      "name": "Delete book",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/api/books/{{bookId}}" }
+    }
+  ]
+}
