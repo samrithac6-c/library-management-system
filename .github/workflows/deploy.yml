@@ -23,11 +23,9 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        working-directory: client
         run: npm install
 
       - name: Build
-        working-directory: client
         run: npm run build
 
       - name: Setup Pages
@@ -36,17 +34,17 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: client/dist
+          path: dist
 
   deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
-    runs-on: ubuntu-latest
-    needs: build
-
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
